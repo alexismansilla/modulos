@@ -1,0 +1,194 @@
+/* =============================================================================
+   				Functions
+   ========================================================================== */
+// Concierte cualquier medida en EM
+@function calc-em($context) {
+	@return (1 / 16px ) * $context+em;
+}
+// Convierte cualquier valor en REM
+@function cr($size) {
+	$remSize: $size / 16px;
+	@return $remSize * 1rem;
+}
+// calcula valor en porcentaje usando contenedor y target
+@function calc-percent($target, $container) {
+	@return ($target / $container) *100%;
+}
+// Shortcode de la función superior
+@function cp($target, $container) {
+	@return calc-percent($target, $container);
+}
+/* =============================================================================
+   				Mixins
+   ========================================================================== */
+
+/*Media Queries*/
+$breakpoints: (
+	mobile:		320px,
+	tablet: 	740px,
+	desktop:	980px,
+	wide:		1300px
+) !default;
+@mixin respond-to($breakpoint) {
+	@if map-has-key($breakpoints, $breakpoint) {
+		@media (min-width: map-get($breakpoints, $breakpoint)) {
+			@content;
+		}
+	}
+	@else {
+		@warn "No existe ningún valor bajo el nombre `#{$breakpoint}`. "
+			+ "Por favor, asegurate que está definido en el mapa `$breakpoints`";
+	}
+}
+@mixin less-than($breakpoint) {
+	@if map-has-key($breakpoints, $breakpoint) {
+		@media (max-width: map-get($breakpoints, $breakpoint)) {
+			@content;
+		}
+	}
+	@else {
+		@warn "No existe ningún valor bajo el nombre `#{$breakpoint}`. "
+			+ "Por favor, asegurate que está definido en el mapa `$breakpoints`";
+	}
+}
+// Centrar verticalmente
+@mixin vertical {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+// Centrar en página
+@mixin center {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+// Cover
+@mixin cover {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+// Para colocar estilos básicos de fuentes
+@mixin text($color, $size, $weight: 400) {
+	color: $color;
+	font-weight: $weight;
+	@include font-size($size);
+}
+// Trama sobre un contenedor
+@mixin trama($color, $alpha, $zindex) {
+	position: relative;
+	z-index: $zindex;
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		transition: background .2s ease-out;
+		background: rgba($color, $alpha);
+		width: 100%;
+		height: 100%;
+	}
+}
+// Mixin para posicionamiento
+@mixin pos( $position: absolute, $top: auto, $right: auto, $bottom: auto, $left: auto ) {
+	position: $position;
+	top: $top;
+	right: $right;
+	bottom: $bottom;
+	left: $left;
+}
+// Trama de graduente que va sobre las fotos
+@mixin trama-gradient($color1, $color2, $opacity, $zindex) {
+	position: relative;
+	z-index: $zindex;
+	&::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		opacity: $opacity;
+		transition: background .2s ease-out;
+		background: linear-gradient(rgba($color1,0) 0%, $color2 100%);
+		width: 100%;
+		height: 100%;
+	}
+}
+// Border top and bottom
+@mixin borders($width, $color) {
+	border-top: $width solid $color;
+	border-bottom: $width solid $color;
+}
+// Centrando un elemento con ancho y alto
+// fijo
+@mixin centered($width, $height) {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: $width;
+	height: $height;
+	margin-left: -$width/2;
+	margin-top: -$height/2;
+}
+// Mixin de Botón
+@mixin btn($color-principal, $color-detalle, $color-hover) {
+	color: white;
+	display: inline-block;
+	font-weight: 400;
+	background: $color-principal;
+	transition: background .3s ease-in-out;
+	@include font-size(14px);
+	&:hover {
+		background: $color-hover;
+	}
+	&:active {
+		background: $color-detalle;
+	}
+}
+// Mixin que usa la función de convertir
+// Valores a REM para crear fuentes
+@mixin font-size($size, $line-height) {
+	line-height: $line-height;
+	line-height: cr($line-height);
+	font-size: $size;
+	font-size: cr($size);
+}
+// Funcion para agarrar colores, sacada de The guardian
+@function color($name, $palette) {
+    @return map-get($palette, $name);
+}
+//Mixing Aspect ratio
+@mixin aspect-ratio($width, $height) {
+  position: relative;
+  &:before {
+    display: block;
+    content: "";
+    width: 100%;
+    padding-top: ($height / $width) * 100%;
+  }
+  > .content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+// Mixin para sticky footer
+@mixin sticky($footer-height, $clase-wrap, $clase-footer) {
+	.#{$clase-wrap} {
+		min-height: 100%;
+		margin-bottom: -$footer-height;
+	}
+	.#{$clase-wrap}:after {
+		content: "";
+		display: block;
+		height: $footer-height;
+	}
+	.#{$clase-footer} {
+		height: $footer-height;
+	}
+}

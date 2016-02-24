@@ -1,0 +1,66 @@
+/*!
+Proyecto: Sticky Footer
+Author: Jairo Burbano
+Twitter: @bleuub
+*/
+/*------------------------------------*\
+    $TABLA DE CONTENIDO
+    Basado en la Guia de Harry Robert https://github.com/csswizardry/CSS-Guidelines
+\*------------------------------------*/
+/**
+ * SETTINGS...........Declaración de Variables SASS
+ * BITS...............Funciones y Mixins de SASS
+ * RESET..............Mezcla de reset de Boilerplate y Normalize
+ * ZINDEX.............Archivo con todos los z-index que se usan en el proyecto
+ *
+ * PLUGINS............Estilos de los Plugins usados
+ *
+ * GLOBAL CLASSES.....Clases que se usan en todo el sitio
+ * MAIN...............Declaraciones de alto nivel
+ * LINKS..............Estilos de los Links
+ *
+ * HEADER.............Elementos de la cabecera
+ * FOOTER.............Footer de la página
+ *
+ * HELPERS............Clases de ayuda
+ * PRINT..............Estilos de impresión
+ */
+
+
+/*------------------------------------*\
+    $GENERIC
+\*------------------------------------*/
+@import "generic/settings";
+@import "generic/bits";
+@import "generic/reset";
+@import "generic/zindex";
+
+
+
+/*------------------------------------*\
+    $PLUGINS
+\*------------------------------------*/
+@import "vendor/plugins";
+
+
+
+/*------------------------------------*\
+    $GLOBAL ELEMENTS
+\*------------------------------------*/
+@import "base/global-classes";
+@import "base/main";
+@import "base/links";
+
+
+/*------------------------------------*\
+    $PAGE STRUCTURE - GENERAL
+\*------------------------------------*/
+@import "objects/header";
+@import "objects/footer";
+
+
+/*------------------------------------*\
+    $EXTRA HELP
+\*------------------------------------*/
+@import "generic/helpers";
+@import "generic/print";

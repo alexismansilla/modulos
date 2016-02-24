@@ -1,0 +1,7 @@
+a {
+	text-decoration: none;
+	background: transparent;
+	&:active, &:hover {
+		outline: 0;
+	}
+}
